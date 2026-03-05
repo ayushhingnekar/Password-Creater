@@ -36,7 +36,7 @@ function App() {
 
 
   return (
-    <div className='d-flex flex-column justify-content-center align-items-center vh-100 text-light'>
+    <div className='d-flex flex-column justify-content-center align-items-center vh-100 text-light bg-white'>
       <div className='m-5 p-5 rounded-4 bg-primary-subtle text-primary-emphasis'>
          <h1>Random Password Generator</h1>
           <div className='input-group mt-4 px-4'>
