@@ -1,10 +1,13 @@
-import { useState, useCallback, useEffect} from 'react'
+import { useState, useCallback, useEffect, useRef} from 'react'
 
 function App() {
   const [length, setLength] = useState(8);
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed, setCharAllowed] = useState(false);
   const [password, setPassword] = useState('');
+
+  //useRef hook
+  const passwordRef = useRef(null)
 
   const passwordGenerator = useCallback(() => {
     let pass = ''
@@ -17,15 +20,20 @@ function App() {
     let char = Math.floor(Math.random() * str.length + 1)
     pass += str.charAt(char)
   }
-
   setPassword(pass)
-
   }, [length, numberAllowed, charAllowed, setPassword])
+
+
+  const copyPasswordToClipboard = useCallback(() => {
+    passwordRef.current?.select()
+    window.navigator.clipboard.writeText(password)
+  }, [password])
   
 
   useEffect(() => {
     passwordGenerator()
-  }, [length, numberAllowed, charAllowed, setPassword])
+  }, [length, numberAllowed, charAllowed, passwordGenerator])
+
 
   return (
     <div className='d-flex flex-column justify-content-center align-items-center vh-100 text-light'>
@@ -39,7 +47,7 @@ function App() {
             placeholder='Enter Your Password'
             readOnly
             />
-            <button className='btn btn-primary'>Copy</button>
+            <button className='btn btn-primary' onClick={copyPasswordToClipboard}>Copy</button>
           </div>
 
           <div className='d-flex justify-content-evenly m-3 px-5 text-primary-emphasis fw-medium fst-italic'>
